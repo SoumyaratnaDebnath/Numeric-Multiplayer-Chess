@@ -1,0 +1,828 @@
+#include<iomanip>
+#include<iostream>
+#include<conio.h>
+#include<stdio.h>
+#include<stdlib.h>
+#include<windows.h> 
+using namespace std;
+void clrscr()
+{
+  system("cls");
+}
+
+void reset(long int a[][8])
+{
+	for(int i=7;i>=0;i--)
+	{
+		a[1][i]=12;
+		a[6][i]=11;
+		if(i>2)
+		{
+			a[0][i]=a[1][i]+10*(8-i);
+			a[7][i]=a[6][i]+10*(8-i);
+		}
+		else
+		{
+			a[0][i]=114-(a[1][i]+10*(8-i));
+			a[7][i]=112-(a[6][i]+10*(8-i));
+		}
+		for(int j=2;j<6;j++)
+		a[j][i]=88;
+	}
+
+}
+
+void show(long int a[][8],int r,int c,int r3,int c3)
+{
+	 int i,k;
+
+	 cout<<"   ";
+	 for(k=0;k<c;k++)
+		 cout<<"+--------";
+     cout<<"+"<<endl;
+		 
+	 for(i=0;i<r;i++)
+	 {
+	 	cout<<"   ";
+		for(int j=0;j<c;j++)
+			{
+				if(i==r3 && j==c3)
+				 {
+					if(a[i][j]==88)
+					cout<<"|"<<"{ "<<"    "<<" }";
+				else if(a[i][j]%10==1)
+				  {
+					  if(a[i][j]/10==1)
+					  cout<<"|"<<"{ "<<"Pwn"<<1<<" }";
+					  if(a[i][j]/10==2)
+					  cout<<"|"<<"{ "<<"Cst"<<1<<" }";
+					  if(a[i][j]/10==3)
+					  cout<<"|"<<"{ "<<"Kni"<<1<<" }";
+					  if(a[i][j]/10==4)
+					  cout<<"|"<<"{ "<<"Bis"<<1<<" }";
+					  if(a[i][j]/10==5)
+					  cout<<"|"<<"{ "<<"Qun"<<1<<" }";
+					  if(a[i][j]/10==6)
+					  cout<<"|"<<"{ "<<"Kng"<<1<<" }";
+				  }else
+					{
+					  if(a[i][j]/10==1)
+					  cout<<"|"<<"{ "<<"Pwn"<<2<<" }";
+					  if(a[i][j]/10==2)
+					  cout<<"|"<<"{ "<<"Cst"<<2<<" }";
+					  if(a[i][j]/10==3)
+					  cout<<"|"<<"{ "<<"Kni"<<2<<" }";
+					  if(a[i][j]/10==4)
+					  cout<<"|"<<"{ "<<"Bis"<<2<<" }";
+					  if(a[i][j]/10==5)
+					  cout<<"|"<<"{ "<<"Qun"<<2<<" }";
+					  if(a[i][j]/10==6)
+					  cout<<"|"<<"{ "<<"Kng"<<2<<" }";
+					}
+				 }
+				else
+				{
+				  if(a[i][j]==88)
+				  cout<<"|"<<"  "<<"    "<<"  ";
+				  else if(a[i][j]%10==1)
+				  {
+					  if(a[i][j]/10==1)
+					  cout<<"|"<<""<<" Pawn "<<1<<" ";
+					  if(a[i][j]/10==2)
+					  cout<<"|"<<""<<"Castle "<<1<<"";
+					  if(a[i][j]/10==3)
+					  cout<<"|"<<""<<"Knight "<<1<<"";
+					  if(a[i][j]/10==4)
+					  cout<<"|"<<""<<"Bishop "<<1<<"";
+					  if(a[i][j]/10==5)
+					  cout<<"|"<<" "<<"Queen"<<1<<" ";
+					  if(a[i][j]/10==6)
+					  cout<<"|"<<" "<<"King "<<1<<" ";
+				  }else
+					{
+					  if(a[i][j]/10==1)
+					  cout<<"|"<<""<<" Pawn "<<2<<" ";
+					  if(a[i][j]/10==2)
+					  cout<<"|"<<""<<"Castle "<<2<<"";
+					  if(a[i][j]/10==3)
+					  cout<<"|"<<""<<"Knight "<<2<<"";
+					  if(a[i][j]/10==4)
+					  cout<<"|"<<""<<"Bishop "<<2<<"";
+					  if(a[i][j]/10==5)
+					  cout<<"|"<<" "<<"Queen"<<2<<" ";
+					  if(a[i][j]/10==6)
+					  cout<<"|"<<" "<<"King "<<2<<" ";
+					}
+			}
+		}
+		cout<<"|";
+
+		cout<<endl;
+        
+        cout<<"   ";
+		for(k=0;k<c;k++)
+		   cout<<"+--------";
+		cout<<"+"<<endl;
+	 }
+	 cout<<setw(78)<<"F : Old Location"<<endl;
+	 cout<<setw(78)<<"G : New Location"<<endl;
+}
+
+int ck(long int a[][8],int r1,int c1,int r2,int c2,int n,int &m,char name1[25],char name2[25])
+{
+  int h=0,s=0,g,pp,mm=0;
+  if(a[r1][c1]%10==n)
+  {
+	 if(a[r1][c1]/10==1)    //For Pawns
+	 {
+		 if(n==1)
+		 {
+		  if(c1==c2)
+			if(r1>r2)
+			 if(r1-r2==1 || r2-r1==1)
+				if(a[r2][c2]==88)
+			  {
+				if(r2==0)
+				{
+				  while(mm==0)
+				  {
+					  cout<<"2=Castle "<<endl;
+					  cout<<"3=Knight "<<endl;
+					  cout<<"4=Bishop "<<endl;
+					  cout<<"5=Queen"<<endl;
+
+					  cout<<name1<<" What do you choose to restore? ";
+					  cin>>pp;
+					  if(pp==2)
+					  {
+						 a[r2][c2]=21;
+						 mm++;
+					  }
+					  else if(pp==3)
+					  {
+						 a[r2][c2]=31;
+						 mm++;
+					  }
+					  else if(pp==4)
+					  {
+						 a[r2][c2]=41;
+						 mm++;
+					  }
+					  else if(pp==5)
+					  {
+						 a[r2][c2]=51;
+						 mm++;
+					  }
+					  else
+					  cout<<"INVALID Input"<<endl;
+				 }
+			  }
+			  else
+					a[r2][c2]=a[r1][c1];
+
+					a[r1][c1]=88;
+			  }
+
+
+		  if(r1-r2==1 || r2-r1==1)
+			if(r1>r2)
+			 if(c1-c2==1 || c2-c1==1)
+				if(a[r2][c2]%10!=n && a[r2][c2]!=88)
+				{
+					if(r2==0)
+				{
+				  while(mm==0)
+				  {
+
+					  cout<<"2=Castle "<<endl;
+					  cout<<"3=Knight "<<endl;
+					  cout<<"4=Bishop "<<endl;
+					  cout<<"5=Queen"<<endl;
+
+					  cout<<name1<<" What do you choose to restore? ";
+					  cin>>pp;
+					  if(pp==2)
+					  {
+						 a[r2][c2]=21;
+						 mm++;
+					  }
+					  else if(pp==3)
+					  {
+						 a[r2][c2]=31;
+						 mm++;
+					  }
+					  else if(pp==4)
+					  {
+						 a[r2][c2]=41;
+						 mm++;
+					  }
+					  else if(pp==5)
+					  {
+						 a[r2][c2]=51;
+						 mm++;
+					  }
+					  else
+					  cout<<"INVALID Input"<<endl;
+				 }
+			  }
+			  else
+					a[r2][c2]=a[r1][c1];
+
+					a[r1][c1]=88;
+				}
+
+		  if(r1==6 && r2==4)
+			 if(c1==c2)
+			 {
+					a[r2][c2]=a[r1][c1];
+					a[r1][c1]=88;
+			 }
+		  }
+		  if(n==2)
+		  {
+			if(c1==c2)
+			 if(r1<r2)
+			  if(r1-r2==1 || r2-r1==1)
+				if(a[r2][c2]==88)
+			  {
+				if(r2==7)
+				{
+				  while(mm==0)
+				  {
+
+					  cout<<"2=Castle "<<endl;
+					  cout<<"3=Knight "<<endl;
+					  cout<<"4=Bishop "<<endl;
+					  cout<<"5=Queen"<<endl;
+
+					  cout<<name2<<" What do you choose to restore? ";
+					  cin>>pp;
+					  if(pp==2)
+					  {
+						 a[r2][c2]=22;
+						 mm++;
+					  }
+					  else if(pp==3)
+					  {
+						 a[r2][c2]=32;
+						 mm++;
+					  }
+					  else if(pp==4)
+					  {
+						 a[r2][c2]=42;
+						 mm++;
+					  }
+					  else if(pp==5)
+					  {
+						 a[r2][c2]=52;
+						 mm++;
+					  }
+					  else
+					  cout<<"INVALID Input"<<endl;
+				 }
+			  }
+			  else
+					a[r2][c2]=a[r1][c1];
+
+					a[r1][c1]=88;
+			  }
+
+
+			 if(r1-r2==1 || r2-r1==1)
+			  if(r1<r2)
+				if(c1-c2==1 || c2-c1==1)
+				 if(a[r2][c2]%10!=n && a[r2][c2]!=88)
+				{
+				if(r2==7)
+				{
+				  while(mm==0)
+				  {
+
+					  cout<<"2=Castle "<<endl;
+					  cout<<"3=Knight "<<endl;
+					  cout<<"4=Bishop "<<endl;
+					  cout<<"5=Queen"<<endl;
+
+					  cout<<name2<<" What do you choose to restore? ";
+					  cin>>pp;
+					  if(pp==2)
+					  {
+						 a[r2][c2]=22;
+						 mm++;
+					  }
+					  else if(pp==3)
+					  {
+						 a[r2][c2]=32;
+						 mm++;
+					  }
+					  else if(pp==4)
+					  {
+						 a[r2][c2]=42;
+						 mm++;
+					  }
+					  else if(pp==5)
+					  {
+						 a[r2][c2]=52;
+						 mm++;
+					  }
+					  else
+					  cout<<"INVALID Input"<<endl;
+				 }
+			  }
+			  else
+					a[r2][c2]=a[r1][c1];
+
+					a[r1][c1]=88;
+				}
+
+			 if(r1==1 && r2==3)
+			 if(c1==c2)
+			 {
+					a[r2][c2]=a[r1][c1];
+					a[r1][c1]=88;
+			 }
+		  }
+	  }
+
+		if(a[r1][c1]/10==2)    // For Rook(Castle)
+		 if(c1==c2 || r1==r2)
+				if(a[r2][c2]%10!=n)
+			  {
+					if(c1==c2)
+					{
+					  if(r2>r1)
+					  for(int g=r1+1;g<r2;g++)
+					  {
+						  if(a[g][c1]!=88)
+						  h++;
+					  }
+
+					  if(r1>r2)
+					  for(int g=r2+1;g<r1;g++)
+					  {
+						  if(a[g][c1]!=88)
+						  h++;
+					  }
+					}
+
+					if(r1==r2)
+					{
+					  if(c2>c1)
+					  for(int g=c1+1;g<c2;g++)
+					  {
+						  if(a[r1][g]!=88)
+						  h++;
+					  }
+
+					  if(c1>c2)
+					  for(g=c2+1;g<c1;g++)
+					  {
+						  if(a[r1][g]!=88)
+						  h++;
+					  }
+					}
+
+					if(h==0)
+					{
+					  a[r2][c2]=a[r1][c1];
+					  a[r1][c1]=88;
+					}
+			  }
+
+		if(a[r1][c1]/10==3)   //For Knight
+		{
+			if(c2-c1==1 || c1-c2==1)
+				if(r2-r1==2 || r1-r2==2)
+					if(a[r2][c2]%10!=n)
+					{
+						a[r2][c2]=a[r1][c1];
+						a[r1][c1]=88;
+					}
+			if(r2-r1==1 || r1-r2==1)
+				if(c2-c1==2 || c1-c2==2)
+					if(a[r2][c2]%10!=n)
+					{
+						a[r2][c2]=a[r1][c1];
+						a[r1][c1]=88;
+					}
+		 }
+
+		if(a[r1][c1]/10==4)   //For Bishop
+		{
+			 if(c2-c1==r2-r1)
+				if(a[r2][c2]%10!=n)
+					{
+						if(c1<c2 && r1<r2)
+						{
+						  for(g=c1+1,s=r1+1;g<c2;g++,s++)
+						  if(a[s][g]!=88)
+						  h++;
+						}
+						if(c2<c1 && r2<r1)
+						{
+						  for(g=c2+1,s=r2+1;g<c1;g++,s++)
+						  if(a[s][g]!=88)
+						  h++;
+						}
+						if(h==0)
+						{
+						  a[r2][c2]=a[r1][c1];
+						  a[r1][c1]=88;
+						}
+					}
+
+			 if(c2-c1==-1*(r2-r1))
+				if(a[r2][c2]%10!=n)
+					{
+						if(c1<c2 && r1>r2)
+						{
+						  for(g=c1+1,s=r1-1;g<c2;g++,s--)
+						  if(a[s][g]!=88)
+						  h++;
+						}
+						if(c2<c1 && r2>r1)
+						{
+						  for(g=c2+1,s=r2-1;g<c1;g++,s--)
+						  if(a[s][g]!=88)
+						  h++;
+						}
+						if(h==0)
+						{
+						  a[r2][c2]=a[r1][c1];
+						  a[r1][c1]=88;
+						}
+					}
+		}
+
+		if(a[r1][c1]/10==5)   // For Queen
+		{
+			 if(c1==c2 || r1==r2)
+				if(a[r2][c2]%10!=n)
+			  {
+					if(c1==c2)
+					{
+					  if(r2>r1)
+					  for(int g=r1+1;g<r2;g++)
+					  {
+						  if(a[g][c1]!=88)
+						  h++;
+					  }
+
+					  if(r1>r2)
+					  for(int g=r2+1;g<r1;g++)
+					  {
+						  if(a[g][c1]!=88)
+						  h++;
+					  }
+					}
+
+					if(r1==r2)
+					{
+					  if(c2>c1)
+					  for(int g=c1+1;g<c2;g++)
+					  {
+						  if(a[r1][g]!=88)
+						  h++;
+					  }
+
+					  if(c1>c2)
+					  for(g=c2+1;g<c1;g++)
+					  {
+						  if(a[r1][g]!=88)
+						  h++;
+					  }
+					}
+
+					if(h==0)
+					{
+					  a[r2][c2]=a[r1][c1];
+					  a[r1][c1]=88;
+					}
+
+				}
+				if(c2-c1==r2-r1)
+				  if(a[r2][c2]%10!=n)
+					{
+						if(c1<c2 && r1<r2)
+						{
+						  for(g=c1+1,s=r1+1;g<c2;g++,s++)
+						  if(a[s][g]!=88)
+						  h++;
+						}
+						if(c2<c1 && r2<r1)
+						{
+						  for(g=c2+1,s=r2+1;g<c1;g++,s++)
+						  if(a[s][g]!=88)
+						  h++;
+						}
+						if(h==0)
+						{
+						  a[r2][c2]=a[r1][c1];
+						  a[r1][c1]=88;
+						}
+					}
+
+				if(c2-c1==-1*(r2-r1))
+				  if(a[r2][c2]%10!=n)
+					{
+						if(c1<c2 && r1>r2)
+						{
+						  for(g=c1+1,s=r1-1;g<c2;g++,s--)
+						  if(a[s][g]!=88)
+						  h++;
+						}
+						if(c2<c1 && r2>r1)
+						{
+						  for(g=c2+1,s=r2-1;g<c1;g++,s--)
+						  if(a[s][g]!=88)
+						  h++;
+						}
+						if(h==0)
+						{
+						  a[r2][c2]=a[r1][c1];
+						  a[r1][c1]=88;
+						}
+					}
+
+		 }
+
+		 if(a[r1][c1]/10==6)   //For King
+		 {
+			if(c1==c2)
+			  if(r1-r2==1 || r2-r1==1)
+				if(a[r2][c2]%10!=n)
+			  {
+					a[r2][c2]=a[r1][c1];
+					a[r1][c1]=88;
+			  }
+
+
+			if(r1-r2==1 || r2-r1==1)
+			  if(c1-c2==1 || c2-c1==1)
+				if(a[r2][c2]%10!=n)
+				{
+					a[r2][c2]=a[r1][c1];
+					a[r1][c1]=88;
+				}
+		 }
+	}
+		 if(a[r1][c1]!=88)
+		 {
+			cout<<endl<<"INVALID MOVE....\n"<<endl;
+			if(n==1)
+			cout<<name1<<" Re-move (Press ENTER)";
+			else
+			cout<<name2<<" Re-move (Press ENTER)";
+
+			getch();
+			return m=2;
+		 }
+		 else return m=1;
+}
+
+int win(long int a[][8],int &c)
+{
+	int p=0,q=0;
+	for(int i=0;i<8;i++)
+	  for(int j=0;j<8;j++)
+	  {
+		  if(a[i][j]==61)
+		  p=1;
+		  if(a[i][j]==62)
+		  q=1;
+	  }
+	if(p==0)
+	return c=1;
+	else if(q==0)
+		  return c=2;
+		  else
+		  return c=0;
+}
+
+int main(void)
+{
+  HWND console = GetConsoleWindow();
+  RECT r;
+  GetWindowRect(console, &r); //stores the console's current dimensions
+  MoveWindow(console, r.left, r.top, 680, 430, TRUE); // 680 width, 430 height
+	
+  char name1[25],name2[25];
+
+  cout<<endl;
+  cout<<"\n              "<<"----------------"<<endl;
+  cout<<"              "<<"| |-----------||     THE NUMERIC MULTIPLAYER"<<endl;
+  cout<<"              "<<"| |   ___    ___  _______   ________   ________"<<endl;
+  cout<<"              "<<"| |   | |    | | | |----|| | |-----|| | |-----||"<<endl;
+  cout<<"              "<<"| |   | |____| | | |       | |______  | |______ "<<endl;
+  cout<<"              "<<"| |   | |____| | | |==||   |______  | |______  |"<<endl;
+  cout<<"              "<<"| |   | |    | | | |              | |        | |"<<endl;
+  cout<<"              "<<"| |   | |    | | | |____|| ||_____| | ||_____| |"<<endl;
+  cout<<"              "<<"| |   ---    ---  -------   --------   --------"<<endl;
+  cout<<"              "<<"| |-----------||          8382681019811097116104"<<endl;
+  cout<<"              "<<"----------------                    "<<endl;
+  cout<<endl<<endl;
+  cout<<"--- NOTE THE MOVES -------------------------------------------------------------"<<endl;
+  cout<<"    W : Moving Up\n    S : Moving Down\n    A : Moving Left\n    D : Moving Right\n"<<endl;
+
+  cout<<"\nPress ENTER to PLAY the game....";
+  getch();
+  clrscr();
+
+  AAA:
+  clrscr();
+  cout<<"--------------------------------------------------------------------------------";
+  cout<<setw(45)<<"GAME MENU"<<endl;
+  cout<<"--------------------------------------------------------------------------------"<<endl<<endl;
+  cout<<"    Player 1, Enter Your Name: ";
+  gets(name1);
+  cout<<"    "<<name1<<", your Name is been Registered";
+  cout<<"\n\n    Player 2, Enter Your Name: ";
+  gets(name2);
+  cout<<"    "<<name2<<", your Name is been Registered";
+
+  cout<<"\n\n\n\n\n\n\n"<<setw(45)<<"PRESS ENTER";
+  getch();
+
+  clrscr();
+  int i=100,c=0,r1,c1,r2,c2,m,r3=7,c3=7;
+  char ch;
+  long int arr[8][8];
+  reset(arr);
+  show(arr,8,8,r3,c3);
+
+  int newTemp=0;
+  while(i!=c)
+  {
+	 m=0;
+	 while(m!=1)
+	 {
+		r2=80;
+	 while(r2==80)
+	 {	
+	    cout<<name1<<", Your Move !";
+		ch=getch();
+		switch(ch)
+		{
+			case 'w':
+			case 'W':(r3==0)?r3=7:r3=r3-1;
+						break;
+			case 'a':
+			case 'A':(c3==0)?c3=7:c3=c3-1;
+						break;
+			case 's':
+			case 'S':(r3==7)?r3=0:r3=r3+1;
+						break;
+			case 'd':
+			case 'D':(c3==7)?c3=0:c3=c3+1;
+						break;
+			case 'f':
+			case 'F': c1=c3;
+						r1=r3;
+						newTemp=0;
+						break;
+			case 'g':
+			case 'G':r2=r3;
+						c2=c3;
+						newTemp=1;
+						break;
+		}
+			clrscr();
+			show(arr,8,8,r3,c3);
+			if(c1==c3 && r1==r3 && newTemp==0)
+			cout<<"Piece Selected"<<endl;
+	 }
+
+		if(arr[r1][c1]!=88)
+		ck(arr,r1,c1,r2,c2,1,m,name1,name2);
+
+		clrscr();
+		show(arr,8,8,r3,c3);
+		win(arr,c);
+		if(c==1)
+		{
+		  clrscr();
+  cout<<"\n--------------- GAME OVER  :  "<<name2<<" Wins !!"<<endl<<endl;
+  cout<<"\n              "<<"----------------"<<endl;
+  cout<<"              "<<"| |-----------||     THE NUMERIC MULTIPLAYER"<<endl;
+  cout<<"              "<<"| |   ___    ___  _______   ________   ________"<<endl;
+  cout<<"              "<<"| |   | |    | | | |----|| | |-----|| | |-----||"<<endl;
+  cout<<"              "<<"| |   | |____| | | |       | |______  | |______ "<<endl;
+  cout<<"              "<<"| |   | |____| | | |==||   |______  | |______  |"<<endl;
+  cout<<"              "<<"| |   | |    | | | |              | |        | |"<<endl;
+  cout<<"              "<<"| |   | |    | | | |____|| ||_____| | ||_____| |"<<endl;
+  cout<<"              "<<"| |   ---    ---  -------   --------   --------"<<endl;
+  cout<<"              "<<"| |-----------||"<<endl;
+  cout<<"              "<<"----------------                      "<<endl;
+  cout<<endl<<endl;
+			cout<<"Press ENTER to RE-PLAY the game...";
+			getch();
+			goto AAA;
+		}
+		if(c==2)
+		{
+		  clrscr();
+  cout<<"\n--------------- GAME OVER  :  "<<name1<<" Wins !!"<<endl<<endl;
+  cout<<"\n              "<<"----------------"<<endl;
+  cout<<"              "<<"| |-----------||     THE NUMERIC MULTIPLAYER"<<endl;
+  cout<<"              "<<"| |   ___    ___  _______   ________   ________"<<endl;
+  cout<<"              "<<"| |   | |    | | | |----|| | |-----|| | |-----||"<<endl;
+  cout<<"              "<<"| |   | |____| | | |       | |______  | |______ "<<endl;
+  cout<<"              "<<"| |   | |____| | | |==||   |______  | |______  |"<<endl;
+  cout<<"              "<<"| |   | |    | | | |              | |        | |"<<endl;
+  cout<<"              "<<"| |   | |    | | | |____|| ||_____| | ||_____| |"<<endl;
+  cout<<"              "<<"| |   ---    ---  -------   --------   --------"<<endl;
+  cout<<"              "<<"| |-----------||"<<endl;
+  cout<<"              "<<"----------------                      "<<endl;
+  cout<<endl<<endl;
+			cout<<"Press ENTER to RE-PLAY the game...";
+			getch();
+			goto AAA;
+		}
+	 }
+
+	 m=0;
+	 while(m!=1)
+	 {
+	  r2=80;
+	 while(r2==80)
+	 {	cout<<name2<<", Your Move !";
+		ch=getch();
+		switch(ch)
+		{
+			case 'w':
+			case 'W':(r3==0)?r3=7:r3=r3-1;
+						break;
+			case 'a':
+			case 'A':(c3==0)?c3=7:c3=c3-1;
+						break;
+			case 's':
+			case 'S':(r3==7)?r3=0:r3=r3+1;
+						break;
+			case 'd':
+			case 'D':(c3==7)?c3=0:c3=c3+1;
+						break;
+			case 'f':
+			case 'F':c1=c3;
+						r1=r3;
+						newTemp=0;
+						break;
+			case 'g':
+			case 'G':r2=r3;
+						c2=c3;
+						newTemp=1;
+						break;
+		}
+		clrscr();
+		show(arr,8,8,r3,c3);
+		if(c1==c3 && r1==r3 && newTemp==0)
+		cout<<"Piece Selected"<<endl;
+	 }
+		if(arr[r1][c1]!=88)
+		ck(arr,r1,c1,r2,c2,2,m,name1,name2);
+
+		clrscr();
+		show(arr,8,8,r3,c3);
+		win(arr,c);
+		if(c==1)
+		{
+		clrscr();
+  cout<<"\n--------------- GAME OVER  :  "<<name2<<" Wins !!"<<endl<<endl;
+  cout<<"\n              "<<"----------------"<<endl;
+  cout<<"              "<<"| |-----------||     THE NUMERIC MULTIPLAYER"<<endl;
+  cout<<"              "<<"| |   ___    ___  _______   ________   ________"<<endl;
+  cout<<"              "<<"| |   | |    | | | |----|| | |-----|| | |-----||"<<endl;
+  cout<<"              "<<"| |   | |____| | | |       | |______  | |______ "<<endl;
+  cout<<"              "<<"| |   | |____| | | |==||   |______  | |______  |"<<endl;
+  cout<<"              "<<"| |   | |    | | | |              | |        | |"<<endl;
+  cout<<"              "<<"| |   | |    | | | |____|| ||_____| | ||_____| |"<<endl;
+  cout<<"              "<<"| |   ---    ---  -------   --------   --------"<<endl;
+  cout<<"              "<<"| |-----------||"<<endl;
+  cout<<"              "<<"----------------                      "<<endl;
+  cout<<endl<<endl;
+			cout<<"Press ENTER to RE-PLAY the game...";
+			getch();
+			goto AAA;
+		}
+		if(c==2)
+		{
+		clrscr();
+  cout<<"\n--------------- GAME OVER  :  "<<name1<<" Wins !!"<<endl<<endl;
+  cout<<"\n              "<<"----------------"<<endl;
+  cout<<"              "<<"| |-----------||     THE NUMERIC MULTIPLAYER"<<endl;
+  cout<<"              "<<"| |   ___    ___  _______   ________   ________"<<endl;
+  cout<<"              "<<"| |   | |    | | | |----|| | |-----|| | |-----||"<<endl;
+  cout<<"              "<<"| |   | |____| | | |       | |______  | |______ "<<endl;
+  cout<<"              "<<"| |   | |____| | | |==||   |______  | |______  |"<<endl;
+  cout<<"              "<<"| |   | |    | | | |              | |        | |"<<endl;
+  cout<<"              "<<"| |   | |    | | | |____|| ||_____| | ||_____| |"<<endl;
+  cout<<"              "<<"| |   ---    ---  -------   --------   --------"<<endl;
+  cout<<"              "<<"| |-----------||"<<endl;
+  cout<<"              "<<"----------------                      "<<endl;
+  cout<<endl<<endl;
+			cout<<"Press ENTER to RE-PLAY the game...";
+			getch();
+			goto AAA;
+		}
+	 }
+  }
+}
